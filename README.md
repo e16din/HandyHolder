@@ -69,6 +69,23 @@ You may use it with any RecyclerView.Adapter.
     }
 ```
 
+## Download
+Step 1. Add it in your root build.gradle at the end of repositories:
+```groovy
+    allprojects {
+        repositories {
+            ...
+            maven { url "https://jitpack.io" }
+        }
+    }
+```
+Step 2. Add the dependency
+```groovy
+    dependencies {
+        compile 'com.github.e16din:HandyHolder:1.0.0'
+    }
+```
+
 ## License MIT
 Copyright (c) 2016 [Александр Кундрюков (e16din)](http://goo.gl/pzjc8x)
 
