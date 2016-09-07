@@ -28,7 +28,7 @@ You may use it with any RecyclerView.Adapter.
 
     @Override
     public HandyHolder onCreateViewHolder(ViewGroup vParent, int viewType) {
-    	if (viewType TYPE_FIRST){
+    	if (viewType == TYPE_FIRST){
         	return HandyHolder.<String>create(this, vParent)
                 	.layoutId(R.layout.item_first)
                 	.async(true)
