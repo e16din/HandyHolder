@@ -31,7 +31,7 @@ You may use it with any RecyclerView.Adapter.
     	if (viewType == TYPE_FIRST){
         	return HandyHolder.<String>create(this, vParent)
                 	.layoutId(R.layout.item_first)
-                	.async(true)
+                	.asyncInflating(true)
                 	.clickListener(new OnClickListener<String>() {
                     	@Override
                     	public void onClick(String item, int position) {
