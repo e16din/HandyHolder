@@ -15,7 +15,7 @@ You may use it with any RecyclerView.Adapter.
 
 ## Usage
 ```java
-	HandyHolder.init(this); // set application context
+	Handy.init(this); // set application context
 
 	//.. in the adapter:
 
@@ -41,7 +41,12 @@ You may use it with any RecyclerView.Adapter.
                 	.holderListener(new Listener())
                 	.init();
         } else {
-		return HandyHolder.<String>create(this, vParent)
+		    return new Handy<MyAdapter, MyViewHolder, String>(this, vParent) {
+                        	@Override
+                            public MyViewHolder newHolder(ViewGroup vRoot) {
+                                return new MyViewHolder(vRoot);
+                            }
+                     }
                 	.layoutId(R.layout.item_second)
                 	.init();
         }
@@ -57,8 +62,6 @@ You may use it with any RecyclerView.Adapter.
 
         @Override
         public void beforeBind(RecyclerView.Adapter a, HandyHolder<String> h, String item, int position) {
-            super.beforeBind(a, h, item, position);
-
             h.rippleEffect(MathUtils.isEven(position));
         }
 
@@ -82,7 +85,7 @@ Step 1. Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```groovy
     dependencies {
-        compile 'com.github.e16din:HandyHolder:1.0.2'
+        compile 'com.github.e16din:HandyHolder:1.1.0'
     }
 ```
 
