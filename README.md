@@ -33,21 +33,21 @@ You may use it with any RecyclerView.Adapter.
                 	.layoutId(R.layout.item_first)
                 	.asyncInflating(true)
                 	.clickListener(new OnClickListener<String>() {
-                    	@Override
-                    	public void onClick(String item, int position) {
-                        	remove(position);
-                    	}
+                    		@Override
+                    		public void onClick(String item, int position) {
+                        		remove(position);
+                    		}
                 	})
-                	.listener(new Listener())
+                	.holderListener(new Listener())
                 	.init();
         } else {
-			return HandyHolder.<String>create(this, vParent)
+		return HandyHolder.<String>create(this, vParent)
                 	.layoutId(R.layout.item_second)
                 	.init();
         }
     }
 
-    private static class Listener extends HandyListener<String> {
+    private static class Listener extends HolderListener<String> {
         TextView vItemText;
 
         @Override
@@ -56,10 +56,10 @@ You may use it with any RecyclerView.Adapter.
         }
 
         @Override
-        public void onPreBind(HandyHolder<String> h, String item, int position) {
-            super.onPreBind(h, item, position);
+        public void beforeBind(RecyclerView.Adapter a, HandyHolder<String> h, String item, int position) {
+            super.beforeBind(a, h, item, position);
 
-            h.rippleEffect(MathUtils.isEven(h.getAdapterPosition()));
+            h.rippleEffect(MathUtils.isEven(position));
         }
 
         @Override
@@ -82,7 +82,7 @@ Step 1. Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```groovy
     dependencies {
-        compile 'com.github.e16din:HandyHolder:1.0.0'
+        compile 'com.github.e16din:HandyHolder:1.0.1'
     }
 ```
 
