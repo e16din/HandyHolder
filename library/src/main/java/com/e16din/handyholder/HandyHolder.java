@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.e16din.handyholder.listeners.HandyListener;
-import com.e16din.handyholder.listeners.OnClickListener;
-import com.e16din.handyholder.listeners.OnViewsClickListener;
+import com.e16din.handyholder.listeners.click.OnClickListener;
+import com.e16din.handyholder.listeners.click.OnViewsClickListener;
+import com.e16din.handyholder.listeners.holder.HolderListener;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
 
     public ViewGroup vContainer;//in the itemView(vRoot)
 
-    private HandyListener<MODEL> mListener;
+    private HolderListener<MODEL> mListener;
 
     private RecyclerView.Adapter mAdapter;//free it on inflate finished
 
@@ -87,12 +87,19 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
 
     public void bindItem(MODEL item, int position) {
         if (mListener != null) {
-            mListener.onPreBind(this, item, position);
+            mListener.beforeBind(mAdapter, this, item, position);
         }
 
         if (mInflated) {
             onBind(item, position);
         } // else and wait for async inflater
+
+        if (mListener != null) {
+            mListener.afterBind(mAdapter, this, item, position);
+            if (!mAsyncInflating) {
+                mAdapter = null;
+            }// else wait for async inflater
+        }
     }
 
     public boolean isInflated() {
@@ -165,7 +172,6 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
             vContainer = (ViewGroup) inflater.inflate(mLayoutId, vRoot, false);
             vRoot.addView(vContainer);
             mInflated = true;
-            mAdapter = null;
         }
 
         return true;
@@ -183,13 +189,15 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
 
         if (position >= 0) {
             mAdapter.notifyItemChanged(position);// -> bindItem()
-            mAdapter = null;
         }
+
+        mListener.onAsyncInflateFinished(mAdapter, this, position);
+        mAdapter = null;
     }
 
     /// setters
 
-    public HandyHolder<MODEL> listener(HandyListener<MODEL> listener) {
+    public HandyHolder<MODEL> holderListener(HolderListener<MODEL> listener) {
         mListener = listener;
         return this;
     }

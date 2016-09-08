@@ -1,4 +1,4 @@
-package com.e16din.handyholder.listeners;
+package com.e16din.handyholder.listeners.click;
 
 import android.support.annotation.IdRes;
 

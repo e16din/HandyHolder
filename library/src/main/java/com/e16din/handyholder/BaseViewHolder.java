@@ -4,10 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.e16din.handyholder.listeners.BaseHandyListener;
+import com.e16din.handyholder.listeners.holder.BaseHolderListener;
 
 
-public abstract class BaseViewHolder<MODEL> extends RecyclerView.ViewHolder implements BaseHandyListener<MODEL> {
+public abstract class BaseViewHolder<MODEL> extends RecyclerView.ViewHolder implements BaseHolderListener<MODEL> {
 
     public FrameLayout vRoot;//is itemView
 

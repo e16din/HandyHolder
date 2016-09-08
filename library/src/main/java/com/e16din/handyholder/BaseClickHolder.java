@@ -3,8 +3,8 @@ package com.e16din.handyholder;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.e16din.handyholder.listeners.OnClickListener;
-import com.e16din.handyholder.listeners.OnViewsClickListener;
+import com.e16din.handyholder.listeners.click.OnClickListener;
+import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 
 import java.util.List;
 
