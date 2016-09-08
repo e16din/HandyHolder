@@ -123,6 +123,10 @@ public class HandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> extends Re
         mCommonBox.bindItem(this, item, position);
     }
 
+    public void onInit(View v) {
+        mCommonBox.onInit(this, v);
+    }
+
     public void freeAdapter() {
         mCommonBox.freeAdapter();
     }
@@ -141,5 +145,33 @@ public class HandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> extends Re
 
     public void setAdapter(ADAPTER adapter) {
         mCommonBox.mAdapter = adapter;
+    }
+
+    public boolean isInflated() {
+        return mCommonBox.mInflated;
+    }
+
+    public void setRootView(FrameLayout vRoot) {
+        mCommonBox.vRoot = vRoot;
+    }
+
+    public void setContainerView(ViewGroup vContainer) {
+        mCommonBox.vContainer = vContainer;
+    }
+
+    public FrameLayout getRootView() {
+        return mCommonBox.vRoot;
+    }
+
+    public ViewGroup getContainerView() {
+        return mCommonBox.vContainer;
+    }
+
+    public OnClickListener<MODEL> getClickListener() {
+        return mCommonBox.getClickListener();
+    }
+
+    public OnViewsClickListener<MODEL> getViewsClickListener() {
+        return mCommonBox.getViewsClickListener();
     }
 }
