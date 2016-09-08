@@ -16,6 +16,7 @@ import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 import com.e16din.handyholder.listeners.holder.HolderListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")//remove it to see warnings
@@ -49,7 +50,7 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
 
     public ViewGroup vContainer;//in the itemView(vRoot)
 
-    private HolderListener<MODEL> mListener;
+    private List<HolderListener<MODEL>> mListeners;
 
     private RecyclerView.Adapter mAdapter;//free it on inflate finished
 
@@ -86,16 +87,21 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
     }
 
     public void bindItem(MODEL item, int position) {
-        if (mListener != null) {
-            mListener.beforeBind(mAdapter, this, item, position);
+        if (mListeners != null) {
+            for (HolderListener<MODEL> listener : mListeners) {
+                listener.beforeBind(mAdapter, this, item, position);
+            }
         }
 
         if (mInflated) {
             onBind(item, position);
         } // else and wait for async inflater
 
-        if (mListener != null) {
-            mListener.afterBind(mAdapter, this, item, position);
+        if (mListeners != null) {
+            for (HolderListener<MODEL> listener : mListeners) {
+                listener.afterBind(mAdapter, this, item, position);
+            }
+
             if (!mAsyncInflating) {
                 mAdapter = null;
             }// else wait for async inflater
@@ -118,20 +124,50 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
         return mLayoutId;
     }
 
+    public void removeHolderListener(HolderListener<MODEL> listener) {
+        if (mListeners != null) {
+            mListeners.remove(listener);
+        }
+    }
+
+    public void clearHolderListeners() {
+        if (mListeners != null) {
+            mListeners.clear();
+        }
+    }
+
+    public void free() {
+        mListeners.clear();
+        mListeners = null;
+
+        mAdapter = null;
+        mSelectorDrawable = null;
+
+        vContainer.removeAllViews();
+        vContainer = null;
+
+        vRoot.removeAllViews();
+        vRoot = null;
+    }
+
     @Override
     public void onInit(HandyHolder<MODEL> h, View v) {
-        if (mListener == null) return;
+        if (mListeners == null) return;
 
-        mListener.onInit(h, v);
+        for (HolderListener<MODEL> listener : mListeners) {
+            listener.onInit(h, v);
+        }
     }
 
     @Override
     public void onBind(MODEL item, int position) {
         super.onBind(item, position);
 
-        if (mListener == null) return;
+        if (mListeners == null) return;
 
-        mListener.onBind(item, position);
+        for (HolderListener<MODEL> listener : mListeners) {
+            listener.onBind(item, position);
+        }
 
         if (mRippleEffect && mSelectorDrawable == null) {
             int[] attrs = new int[]{android.R.attr.selectableItemBackground};
@@ -191,14 +227,21 @@ public class HandyHolder<MODEL> extends BaseClickHolder<MODEL> {
             mAdapter.notifyItemChanged(position);// -> bindItem()
         }
 
-        mListener.onAsyncInflateFinished(mAdapter, this, position);
+        for (HolderListener<MODEL> listener : mListeners) {
+            listener.onAsyncInflateFinished(mAdapter, this, position);
+        }
+
         mAdapter = null;
     }
 
     /// setters
 
     public HandyHolder<MODEL> holderListener(HolderListener<MODEL> listener) {
-        mListener = listener;
+        if (mListeners == null) {
+            mListeners = new ArrayList<>();
+        }
+
+        mListeners.add(listener);
         return this;
     }
 
