@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.e16din.handyholder.holder.HandyHolder;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
-import com.e16din.handyholder.wrapper.StrongHandy;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
             throw new IllegalArgumentException("mLayoutId may not be 0, use setLayoutId() method before init.");
         }
 
-        final LayoutInflater inflater = LayoutInflater.from(StrongHandy.getContext());
+        final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
 
         if (inflate(holder, inflater)) {
             onInit(holder, vRoot);
@@ -104,15 +104,15 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
             if (!hasStubId) {
                 ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                        Utils.dpToPx(StrongHandy.getContext(), mEmptyStubSize.x),
-                        Utils.dpToPx(StrongHandy.getContext(), mEmptyStubSize.y));
+                        Utils.dpToPx(HandyHolder.getContext(), mEmptyStubSize.x),
+                        Utils.dpToPx(HandyHolder.getContext(), mEmptyStubSize.y));
 
                 vStub.setLayoutParams(params);
             }
 
             vRoot.addView(vStub);
 
-            final AsyncLayoutInflater asyncInflater = new AsyncLayoutInflater(StrongHandy.getContext());
+            final AsyncLayoutInflater asyncInflater = new AsyncLayoutInflater(HandyHolder.getContext());
             asyncInflater.inflate(mLayoutId, vRoot,
                     new AsyncLayoutInflater.OnInflateFinishedListener() {
                         @Override
@@ -162,7 +162,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
         if (mRippleEffect && mSelectorDrawable == null) {
             int[] attrs = new int[]{android.R.attr.selectableItemBackground};
-            TypedArray ta = StrongHandy.getContext().obtainStyledAttributes(attrs);
+            TypedArray ta = HandyHolder.getContext().obtainStyledAttributes(attrs);
             mSelectorDrawable = ta.getDrawable(0);
             ta.recycle();
         }

@@ -1,13 +1,13 @@
 package com.e16din.handyholder.wrapper;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.e16din.handyholder.ChainBox;
+import com.e16din.handyholder.AlreadyBox;
 import com.e16din.handyholder.R;
+import com.e16din.handyholder.holder.HandyHolder;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
 
 import java.util.List;
@@ -17,23 +17,13 @@ public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER e
 
     private static final int NO_STUB_LAYOUT = 0;
 
-    private static Context sContext;
-
-    public static void init(Context context) {
-        sContext = context;
-    }
-
-    public static Context getContext() {
-        return sContext;
-    }
-
     private HOLDER mHolder;
 
-    protected ChainBox<ADAPTER, HOLDER, MODEL> mCommonBox = new ChainBox<>();
+    protected AlreadyBox<ADAPTER, HOLDER, MODEL> mCommonBox = new AlreadyBox<>();
 
 
     public StrongHandy(ADAPTER adapter, ViewGroup vParent) {
-        final LayoutInflater inflater = LayoutInflater.from(sContext);
+        final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
         ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
         mHolder = newHolder(itemView);
         mCommonBox.vRoot = (FrameLayout) itemView;
@@ -45,7 +35,7 @@ public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER e
         mCommonBox.layoutId(layoutId);
     }
 
-    public ChainBox set() {
+    public AlreadyBox set() {
         return mCommonBox;
     }
 

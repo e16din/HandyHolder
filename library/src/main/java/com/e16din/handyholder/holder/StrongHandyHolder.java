@@ -6,12 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.e16din.handyholder.ChainBox;
+import com.e16din.handyholder.AlreadyBox;
 import com.e16din.handyholder.R;
 import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
-import com.e16din.handyholder.wrapper.StrongHandy;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
     public static <ADAPTER extends RecyclerView.Adapter, MODEL>
     StrongHandyHolder<ADAPTER, MODEL> createStrong(ADAPTER adapter, ViewGroup vParent, int layoutId) {
 
-        final LayoutInflater inflater = LayoutInflater.from(StrongHandy.getContext());
+        final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
         ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
         final StrongHandyHolder<ADAPTER, MODEL> holder = new StrongHandyHolder<>(itemView);
         holder.setAdapter(adapter);
@@ -46,7 +45,7 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
     }
 
 
-    protected ChainBox<ADAPTER, StrongHandyHolder<ADAPTER, MODEL>, MODEL> mCommonBox = new ChainBox<>();
+    protected AlreadyBox<ADAPTER, StrongHandyHolder<ADAPTER, MODEL>, MODEL> mCommonBox = new AlreadyBox<>();
 
 
     public StrongHandyHolder(View itemView) {
@@ -54,7 +53,7 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
         mCommonBox.vRoot = (FrameLayout) itemView;
     }
 
-    public ChainBox set() {
+    public AlreadyBox set() {
         return mCommonBox;
     }
 
