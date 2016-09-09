@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.e16din.handyholder.listeners.holder.HolderListener;
-import com.e16din.handyholder.wrapper.Handy;
+import com.e16din.handyholder.listeners.holder.StrongHolderListener;
+import com.e16din.handyholder.wrapper.StrongHandy;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
     public ViewGroup vContainer;//in the itemView(vRoot)
 
 
-    public List<HolderListener<ADAPTER, HOLDER, MODEL>> mListeners;
+    public List<StrongHolderListener<ADAPTER, HOLDER, MODEL>> mListeners;
 
     public ADAPTER mAdapter;//free it on inflate finished
 
@@ -44,12 +44,14 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
     public boolean mRippleEffect = true;
 
+    public boolean mRecyclable = false;
+
 
     public void freeAdapter() {
         mAdapter = null;
     }
 
-    public void removeHolderListener(HolderListener listener) {
+    public void removeHolderListener(StrongHolderListener listener) {
         if (mListeners != null) {
             mListeners.remove(listener);
         }
@@ -66,7 +68,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
             throw new IllegalArgumentException("mLayoutId may not be 0, use setLayoutId() method before init.");
         }
 
-        final LayoutInflater inflater = LayoutInflater.from(Handy.getContext());
+        final LayoutInflater inflater = LayoutInflater.from(StrongHandy.getContext());
 
         if (inflate(holder, inflater)) {
             onInit(holder, vRoot);
@@ -87,7 +89,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
             mAdapter.notifyItemChanged(position);// -> bindItem()
         }
 
-        for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+        for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
             listener.onAsyncInflateFinished(mAdapter, holder, position);
         }
 
@@ -102,15 +104,15 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
             if (!hasStubId) {
                 ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                        Utils.dpToPx(Handy.getContext(), mEmptyStubSize.x),
-                        Utils.dpToPx(Handy.getContext(), mEmptyStubSize.y));
+                        Utils.dpToPx(StrongHandy.getContext(), mEmptyStubSize.x),
+                        Utils.dpToPx(StrongHandy.getContext(), mEmptyStubSize.y));
 
                 vStub.setLayoutParams(params);
             }
 
             vRoot.addView(vStub);
 
-            final AsyncLayoutInflater asyncInflater = new AsyncLayoutInflater(Handy.getContext());
+            final AsyncLayoutInflater asyncInflater = new AsyncLayoutInflater(StrongHandy.getContext());
             asyncInflater.inflate(mLayoutId, vRoot,
                     new AsyncLayoutInflater.OnInflateFinishedListener() {
                         @Override
@@ -131,7 +133,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
     public void bindItem(HOLDER holder, MODEL item, int position) {
         if (mListeners != null) {
 
-            for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+            for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.beforeBind(mAdapter, holder, item, position);
             }
         }
@@ -141,7 +143,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         } // else and wait for async inflater
 
         if (mListeners != null) {
-            for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+            for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.afterBind(mAdapter, holder, item, position);
             }
 
@@ -154,14 +156,13 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
     public void onBind(HOLDER holder, MODEL item, int position) {
         if (mListeners == null) return;
 
-        for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
-            listener.onBind(mAdapter, holder, item, position);
+        for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
             listener.onBind(item, position);
         }
 
         if (mRippleEffect && mSelectorDrawable == null) {
             int[] attrs = new int[]{android.R.attr.selectableItemBackground};
-            TypedArray ta = Handy.getContext().obtainStyledAttributes(attrs);
+            TypedArray ta = StrongHandy.getContext().obtainStyledAttributes(attrs);
             mSelectorDrawable = ta.getDrawable(0);
             ta.recycle();
         }
@@ -172,7 +173,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
     public void onInit(HOLDER h, View v) {
         if (mListeners == null) return;
 
-        for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+        for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
             listener.onInit(h, v);
         }
     }
