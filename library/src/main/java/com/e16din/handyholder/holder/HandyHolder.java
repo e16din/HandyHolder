@@ -39,6 +39,18 @@ public class HandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> extends Re
                 .layoutId(layoutId);
     }
 
+    public static <MODEL> HandyHolder<RecyclerView.Adapter, MODEL> create(ViewGroup vParent) {
+        final LayoutInflater inflater = LayoutInflater.from(Handy.getContext());
+        ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
+        return new SimpleHolder<>(itemView);
+    }
+
+    public static <MODEL> HandyHolder<RecyclerView.Adapter, MODEL> create(ViewGroup vParent, int layoutId) {
+        return HandyHolder.<MODEL>create(vParent)
+                .layoutId(layoutId);
+    }
+
+
     private ClickBox<ADAPTER, HandyHolder<ADAPTER, MODEL>, MODEL> mCommonBox = new ClickBox<>();
 
 
@@ -111,6 +123,11 @@ public class HandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> extends Re
 
     public HandyHolder<ADAPTER, MODEL> rippleEffect(boolean rippleEffect) {
         mCommonBox.mRippleEffect = rippleEffect;
+        return this;
+    }
+
+    public HandyHolder<ADAPTER, MODEL> adapter(ADAPTER adapter) {
+        mCommonBox.mAdapter = adapter;
         return this;
     }
 
