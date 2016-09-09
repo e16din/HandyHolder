@@ -30,6 +30,7 @@ You may use it with any RecyclerView.Adapter.
     public HandyHolder onCreateViewHolder(ViewGroup vParent, int viewType) {
     	if (viewType == TYPE_FIRST){
         	return HandyHolder.<String>create(this, vParent)
+        	        .set()
                 	.layoutId(R.layout.item_first)
                 	.asyncInflating(true)
                 	.clickListener(new OnClickListener<String>() {
@@ -41,14 +42,15 @@ You may use it with any RecyclerView.Adapter.
                 	.holderListener(new Listener())
                 	.init();
         } else {
-		    return new Handy<MyAdapter, MyViewHolder, String>(this, vParent) {
+		    return new Handy<String>(this, vParent) {
                         	@Override
                             public MyViewHolder newHolder(ViewGroup vRoot) {
                                 return new MyViewHolder(vRoot);
                             }
                      }
-                	.layoutId(R.layout.item_second)
-                	.init();
+                   .set()
+                   .layoutId(R.layout.item_second)
+                   .init();
         }
     }
 
@@ -85,7 +87,7 @@ Step 1. Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```groovy
     dependencies {
-        compile 'com.github.e16din:HandyHolder:1.1.2'
+        compile 'com.github.e16din:HandyHolder:1.2.0'
     }
 ```
 
