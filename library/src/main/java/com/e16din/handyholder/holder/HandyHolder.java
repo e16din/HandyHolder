@@ -12,6 +12,7 @@ public class HandyHolder<MODEL> extends StrongHandyHolder<RecyclerView.Adapter, 
 
     private static Context sContext;
 
+
     public static void init(Context context) {
         sContext = context;
     }
@@ -24,6 +25,11 @@ public class HandyHolder<MODEL> extends StrongHandyHolder<RecyclerView.Adapter, 
     public HandyHolder(View itemView) {
         super(itemView);
     }
+
+    public HandyHolder(View itemView, int layoutId) {
+        super(itemView, layoutId);
+    }
+
 
     public static <MODEL> HandyHolder<MODEL> create(RecyclerView.Adapter adapter, ViewGroup vParent, int layoutId) {
         final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());

@@ -53,6 +53,11 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
         mCommonBox.vRoot = (FrameLayout) itemView;
     }
 
+    public StrongHandyHolder(View itemView, int layoutId) {
+        this(itemView);
+        mCommonBox.layoutId(layoutId);
+    }
+
     public AlreadyBox set() {
         return mCommonBox;
     }

@@ -96,4 +96,8 @@ public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recyc
         init(mHolder);
         return mHolder;
     }
+
+    public HOLDER holder() {
+        return mHolder;
+    }
 }
