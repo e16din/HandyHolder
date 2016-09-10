@@ -15,8 +15,14 @@ import java.util.List;
 public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL>
         extends ClickBox<ADAPTER, HOLDER, MODEL> {
 
+    // free it on init() and holder() methods to avoid memory leaks.
     public HOLDER mHolder;
 
+    /**
+     * Set holder to return it on init() and holder() methods.
+     * <p/>
+     * Free it on init() and holder() methods to avoid memory leaks.
+     */
     public void setHolder(HOLDER holder) {
         mHolder = holder;
     }
@@ -92,12 +98,26 @@ public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recyc
         return this;
     }
 
+    /**
+     * Init and free holder.
+     *
+     * @return Inited holder.
+     */
     public HOLDER init() {
-        init(mHolder);
-        return mHolder;
+        HOLDER result = mHolder;
+        mHolder = null;
+        init(result);
+        return result;
     }
 
+    /**
+     * Return and free holder.
+     *
+     * @return holder.
+     */
     public HOLDER holder() {
-        return mHolder;
+        HOLDER result = mHolder;
+        mHolder = null;
+        return result;
     }
 }

@@ -17,7 +17,6 @@ public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER e
 
     private static final int NO_STUB_LAYOUT = 0;
 
-    private HOLDER mHolder;
 
     protected AlreadyBox<ADAPTER, HOLDER, MODEL> mCommonBox = new AlreadyBox<>();
 
@@ -25,7 +24,7 @@ public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER e
     public StrongHandy(ADAPTER adapter, ViewGroup vParent) {
         final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
         ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
-        mHolder = newHolder(itemView);
+        mCommonBox.setHolder(newHolder(itemView));
         mCommonBox.vRoot = (FrameLayout) itemView;
         mCommonBox.mAdapter = adapter;
     }
@@ -41,10 +40,6 @@ public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER e
 
     public abstract HOLDER newHolder(ViewGroup vRoot);
 
-
-    public void bindItem(MODEL item, int position) {
-        mCommonBox.bindItem(mHolder, item, position);
-    }
 
     public void freeAdapter() {
         mCommonBox.freeAdapter();
