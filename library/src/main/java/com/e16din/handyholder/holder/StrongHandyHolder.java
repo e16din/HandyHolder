@@ -118,4 +118,20 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
     public OnViewsClickListener<MODEL> getViewsClickListener() {
         return mCommonBox.getViewsClickListener();
     }
+
+
+    public void onInit(StrongHandyHolder h, View v) {
+    }
+
+    public void beforeBind(ADAPTER adapter, MODEL item, int position) {
+    }
+
+    public void onBind(MODEL item, int position) {
+    }
+
+    public void afterBind(ADAPTER adapter, MODEL item, int position) {
+    }
+
+    public void onAsyncInflateFinished(ADAPTER adapter, int position) {
+    }
 }

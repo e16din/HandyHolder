@@ -3,12 +3,13 @@ package com.e16din.handyholder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.e16din.handyholder.holder.StrongHandyHolder;
 import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 
 import java.util.List;
 
-public class ClickBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL>
+public class ClickBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL>
         extends BaseBox<ADAPTER, HOLDER, MODEL> {
 
     private OnClickListener<MODEL> mClickListener;

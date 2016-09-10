@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.e16din.handyholder.holder.HandyHolder;
+import com.e16din.handyholder.holder.StrongHandyHolder;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
 
 import java.util.List;
 
-public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL> {
+public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL> {
 
     private static final int NO_STUB_LAYOUT = 0;
 
@@ -93,6 +94,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
             listener.onAsyncInflateFinished(mAdapter, holder, position);
         }
 
+        holder.onAsyncInflateFinished(mAdapter, position);
         freeAdapter();
     }
 
@@ -132,25 +134,27 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
     public void bindItem(HOLDER holder, MODEL item, int position) {
         if (mListeners != null) {
-
             for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.beforeBind(mAdapter, holder, item, position);
             }
         }
+        holder.beforeBind(mAdapter, item, position);
 
         if (mInflated) {
             onBind(holder, item, position);
         } // else and wait for async inflater
+        holder.onBind(item, position);
 
         if (mListeners != null) {
             for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.afterBind(mAdapter, holder, item, position);
             }
-
-            if (!mAsyncInflating) {
-                freeAdapter();
-            }// else wait for async inflater
         }
+        holder.afterBind(mAdapter, item, position);
+
+        if (!mAsyncInflating) {
+            freeAdapter();
+        }// else wait for async inflater
     }
 
     public void onBind(HOLDER holder, MODEL item, int position) {
@@ -176,5 +180,6 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
             listener.onInit(h, v);
         }
+        h.onInit(h, v);
     }
 }

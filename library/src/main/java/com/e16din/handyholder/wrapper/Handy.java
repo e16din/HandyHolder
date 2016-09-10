@@ -3,7 +3,9 @@ package com.e16din.handyholder.wrapper;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-public abstract class Handy<MODEL> extends StrongHandy<RecyclerView.Adapter, RecyclerView.ViewHolder, MODEL> {
+import com.e16din.handyholder.holder.HandyHolder;
+
+public abstract class Handy<MODEL> extends StrongHandy<RecyclerView.Adapter, HandyHolder, MODEL> {
 
     public Handy(RecyclerView.Adapter adapter, ViewGroup vParent) {
         super(adapter, vParent);

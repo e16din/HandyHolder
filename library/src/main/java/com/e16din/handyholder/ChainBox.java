@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 
+import com.e16din.handyholder.holder.StrongHandyHolder;
 import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
@@ -12,7 +13,7 @@ import com.e16din.handyholder.listeners.holder.StrongHolderListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL>
+public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL>
         extends ClickBox<ADAPTER, HOLDER, MODEL> {
 
     // free it on init() and holder() methods to avoid memory leaks.

@@ -8,12 +8,13 @@ import android.widget.FrameLayout;
 import com.e16din.handyholder.AlreadyBox;
 import com.e16din.handyholder.R;
 import com.e16din.handyholder.holder.HandyHolder;
+import com.e16din.handyholder.holder.StrongHandyHolder;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
 
 import java.util.List;
 
 @SuppressWarnings("unused")//remove it to see warnings
-public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL> {
+public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL> {
 
     private static final int NO_STUB_LAYOUT = 0;
 
