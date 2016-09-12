@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 
-import com.e16din.handyholder.holder.StrongHandyHolder;
 import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
@@ -13,20 +12,8 @@ import com.e16din.handyholder.listeners.holder.StrongHolderListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL>
+public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL>
         extends ClickBox<ADAPTER, HOLDER, MODEL> {
-
-    // free it on init() and holder() methods to avoid memory leaks.
-    public HOLDER mHolder;
-
-    /**
-     * Set holder to return it on init() and holder() methods.
-     * <p/>
-     * Free it on init() and holder() methods to avoid memory leaks.
-     */
-    public void setHolder(HOLDER holder) {
-        mHolder = holder;
-    }
 
     public ChainBox<ADAPTER, HOLDER, MODEL> holderListener(StrongHolderListener<ADAPTER, HOLDER, MODEL> listener) {
 
@@ -94,31 +81,40 @@ public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Stron
         return this;
     }
 
+    /**
+     * Set adapter, to use on holder callbacks, free it on inflate finished.
+     */
     public ChainBox<ADAPTER, HOLDER, MODEL> adapter(ADAPTER adapter) {
         mAdapter = adapter;
         return this;
     }
 
     /**
-     * Init and free holder.
+     * Set holder, to use on holder callbacks, free it on inflate finished.
+     */
+    public ChainBox<ADAPTER, HOLDER, MODEL> holder(HOLDER holder) {
+        mHolder = holder;
+        return this;
+    }
+
+    /**
+     * Init and free view holder.
      *
-     * @return Inited holder.
+     * @return Inited view holder.
      */
     public HOLDER init() {
         HOLDER result = mHolder;
-        mHolder = null;
+        if (!mAsyncInflating) {
+            freeHolder();
+        }// else wait for async inflater
         init(result);
         return result;
     }
 
     /**
-     * Return and free holder.
-     *
-     * @return holder.
+     * @return getHolder.
      */
-    public HOLDER holder() {
-        HOLDER result = mHolder;
-        mHolder = null;
-        return result;
+    public HOLDER getHolder() {
+        return mHolder;
     }
 }

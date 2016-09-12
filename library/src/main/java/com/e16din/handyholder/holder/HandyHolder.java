@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.e16din.handyholder.R;
 
@@ -35,8 +36,7 @@ public class HandyHolder<MODEL> extends StrongHandyHolder<RecyclerView.Adapter, 
         final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
         ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
         final HandyHolder<MODEL> holder = new HandyHolder<>(itemView);
-        holder.setAdapter(adapter);
-        holder.mCommonBox.layoutId(layoutId);
+        onCreate(adapter, layoutId, (FrameLayout) itemView, holder);
 
         return holder;
     }

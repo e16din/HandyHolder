@@ -1,11 +1,12 @@
 package com.e16din.handyholder;
 
-import android.content.Context;
 import android.util.TypedValue;
 
+import com.e16din.handyholder.holder.HandyHolder;
+
 public class Utils {
-    public static int dpToPx(Context context, float dp) {
+    public static int dpToPx(float dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                context.getResources().getDisplayMetrics());
+                HandyHolder.getContext().getResources().getDisplayMetrics());
     }
 }

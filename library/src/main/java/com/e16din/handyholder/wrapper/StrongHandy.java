@@ -14,25 +14,32 @@ import com.e16din.handyholder.listeners.holder.StrongHolderListener;
 import java.util.List;
 
 @SuppressWarnings("unused")//remove it to see warnings
-public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL> {
+public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL> {
 
     private static final int NO_STUB_LAYOUT = 0;
 
 
-    protected AlreadyBox<ADAPTER, HOLDER, MODEL> mCommonBox = new AlreadyBox<>();
+    protected AlreadyBox<ADAPTER, HOLDER, MODEL> mCommonBox;
 
-
-    public StrongHandy(ADAPTER adapter, ViewGroup vParent) {
-        final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
-        ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
-        mCommonBox.setHolder(newHolder(itemView));
-        mCommonBox.vRoot = (FrameLayout) itemView;
-        mCommonBox.mAdapter = adapter;
-    }
 
     public StrongHandy(ADAPTER adapter, ViewGroup vParent, int layoutId) {
-        this(adapter, vParent);
-        mCommonBox.layoutId(layoutId);
+        final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
+        ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
+        final HOLDER holder = newHolder(itemView);
+
+        if (holder instanceof StrongHandyHolder) {
+            mCommonBox = ((StrongHandyHolder) holder).set();
+        } else {
+            mCommonBox = new AlreadyBox<>();
+            mCommonBox.layoutId(layoutId);
+        }
+
+        mCommonBox.adapter(adapter);
+        mCommonBox.vRoot = (FrameLayout) itemView;
+    }
+
+    public StrongHandy(ADAPTER adapter, ViewGroup vParent) {
+        this(adapter, vParent, 0);
     }
 
     public AlreadyBox set() {
@@ -41,10 +48,6 @@ public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER e
 
     public abstract HOLDER newHolder(ViewGroup vRoot);
 
-
-    public void freeAdapter() {
-        mCommonBox.freeAdapter();
-    }
 
     public List<StrongHolderListener<ADAPTER, HOLDER, MODEL>> getListeners() {
         return mCommonBox.mListeners;

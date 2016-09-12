@@ -3,11 +3,9 @@ package com.e16din.handyholder.listeners.holder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.e16din.handyholder.holder.StrongHandyHolder;
-
 
 public interface BaseHolderListener
-        <ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL> {
+        <ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL> {
 
     void onInit(HOLDER h, View v);
 

@@ -24,10 +24,16 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
         final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
         ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
         final StrongHandyHolder<ADAPTER, MODEL> holder = new StrongHandyHolder<>(itemView);
-        holder.setAdapter(adapter);
-        holder.mCommonBox.layoutId(layoutId);
+        onCreate(adapter, layoutId, (FrameLayout) itemView, holder);
 
         return holder;
+    }
+
+    protected static <ADAPTER extends RecyclerView.Adapter, MODEL> void onCreate(ADAPTER adapter, int layoutId, FrameLayout itemView, StrongHandyHolder<ADAPTER, MODEL> holder) {
+        holder.mCommonBox.vRoot = itemView;
+        holder.mCommonBox
+                .adapter(adapter)
+                .layoutId(layoutId);
     }
 
     public static <ADAPTER extends RecyclerView.Adapter, MODEL>
@@ -50,7 +56,6 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
 
     public StrongHandyHolder(View itemView) {
         super(itemView);
-        mCommonBox.vRoot = (FrameLayout) itemView;
         mCommonBox.setHolder(this);
     }
 
@@ -65,14 +70,6 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
 
     public void bindItem(MODEL item, int position) {
         mCommonBox.bindItem(this, item, position);
-    }
-
-    public void onInit(View v) {
-        mCommonBox.onInit(this, v);
-    }
-
-    public void freeAdapter() {
-        mCommonBox.freeAdapter();
     }
 
     public List<StrongHolderListener<ADAPTER, StrongHandyHolder<ADAPTER, MODEL>, MODEL>> getListeners() {
@@ -120,7 +117,7 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
     }
 
 
-    public void onInit(StrongHandyHolder h, View v) {
+    public void onInit(View v) {
     }
 
     public void beforeBind(ADAPTER adapter, MODEL item, int position) {

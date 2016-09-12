@@ -3,9 +3,7 @@ package com.e16din.handyholder;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.e16din.handyholder.holder.StrongHandyHolder;
-
-public class AlreadyBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends StrongHandyHolder, MODEL>
+public class AlreadyBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL>
         extends ChainBox<ADAPTER, HOLDER, MODEL> {
 
     private boolean mAlreadyInited = false;
