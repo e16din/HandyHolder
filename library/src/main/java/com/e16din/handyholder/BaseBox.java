@@ -60,7 +60,8 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
     @LayoutRes public int mStubId = NO_STUB_LAYOUT;
 
-    @ColorInt int mRippleColor = WRONG_VALUE;
+    @ColorInt
+    public int mRippleColor = WRONG_VALUE;
 
     public boolean mInflated = false;
 
