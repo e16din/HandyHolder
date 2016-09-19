@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,8 @@ import java.util.List;
 public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL> {
 
     private static final int NO_STUB_LAYOUT = 0;
+
+    public static final int WRONG_VALUE = -1;
 
     // free it on init() and getHolder() methods to avoid memory leaks.
     public HOLDER mHolder;
@@ -56,6 +59,8 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
     public Point mEmptyStubSize = new Point(0, 64);//dp, 0 is MATCH_PARENT
 
     @LayoutRes public int mStubId = NO_STUB_LAYOUT;
+
+    @ColorInt int mRippleColor = WRONG_VALUE;
 
     public boolean mInflated = false;
 
@@ -208,15 +213,22 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         }
 
         if (mRippleEffect && mRippleSelectorDrawable == null) {
-            int[] attrs = new int[]{android.R.attr.selectableItemBackground};
-            TypedArray ta = HandyHolder.getContext().obtainStyledAttributes(attrs);
+            final int[] attrs = new int[]{android.R.attr.selectableItemBackground};
+            final TypedArray ta = HandyHolder.getContext().obtainStyledAttributes(attrs);
+
             mRippleSelectorDrawable = (RippleDrawable) ta.getDrawable(0);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                final int rippleColor = mRippleColor != WRONG_VALUE
+                        ? mRippleColor
+                        : ContextCompat.getColor(holder.itemView.getContext(), R.color.handyRippleColor);
+
                 mRippleSelectorDrawable.setColor(createSelector(
                         ContextCompat.getColor(holder.itemView.getContext(), android.R.color.transparent),
-                        ContextCompat.getColor(holder.itemView.getContext(), R.color.handyRippleColor)
+                        rippleColor
                 ));
             }
+
             ta.recycle();
         }
 

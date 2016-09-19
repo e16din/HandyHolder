@@ -29,7 +29,8 @@ public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> exte
         return holder;
     }
 
-    protected static <ADAPTER extends RecyclerView.Adapter, MODEL> void onCreate(ADAPTER adapter, int layoutId, FrameLayout itemView, StrongHandyHolder<ADAPTER, MODEL> holder) {
+    protected static <ADAPTER extends RecyclerView.Adapter, MODEL> void onCreate(
+            ADAPTER adapter, int layoutId, FrameLayout itemView, StrongHandyHolder<ADAPTER, MODEL> holder) {
         holder.mCommonBox.vRoot = itemView;
         holder.mCommonBox
                 .adapter(adapter)

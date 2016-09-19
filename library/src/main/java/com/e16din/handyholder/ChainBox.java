@@ -2,6 +2,7 @@ package com.e16din.handyholder;
 
 
 import android.graphics.Point;
+import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 
@@ -46,7 +47,7 @@ public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recyc
         return this;
     }
 
-    public ChainBox<ADAPTER, HOLDER, MODEL> clickListener(OnClickListener<MODEL> listener) {
+    public ChainBox<ADAPTER, HOLDER, MODEL> onClick(OnClickListener<MODEL> listener) {
         setClickListener(listener);
         return this;
     }
@@ -61,12 +62,12 @@ public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recyc
         setViewsClickListener(listener);
     }
 
-    public ChainBox<ADAPTER, HOLDER, MODEL> viewsClickListener(List<Integer> views, OnViewsClickListener<MODEL> listener) {
+    public ChainBox<ADAPTER, HOLDER, MODEL> onViewsClick(List<Integer> views, OnViewsClickListener<MODEL> listener) {
         setViewsClickListener(views, listener);
         return this;
     }
 
-    public ChainBox<ADAPTER, HOLDER, MODEL> viewsClickListener(int[] views, OnViewsClickListener<MODEL> listener) {
+    public ChainBox<ADAPTER, HOLDER, MODEL> onViewsClick(int[] views, OnViewsClickListener<MODEL> listener) {
         setViewsClickListener(views, listener);
         return this;
     }
@@ -78,6 +79,11 @@ public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recyc
 
     public ChainBox<ADAPTER, HOLDER, MODEL> rippleEffect(boolean rippleEffect) {
         mRippleEffect = rippleEffect;
+        return this;
+    }
+
+    public ChainBox<ADAPTER, HOLDER, MODEL> rippleColor(@ColorInt int color) {
+        mRippleColor = color;
         return this;
     }
 

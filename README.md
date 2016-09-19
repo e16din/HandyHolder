@@ -33,7 +33,7 @@ You may use it with any RecyclerView.Adapter.
         	        .set()
                 	.layoutId(R.layout.item_first)
                 	.asyncInflating(true)
-                	.clickListener(new OnClickListener<String>() {
+                	.onClick(new OnClickListener<String>() {
                     		@Override
                     		public void onClick(String item, int position) {
                         		remove(position);
@@ -75,8 +75,12 @@ You may use it with any RecyclerView.Adapter.
 ```
 
 ## Customize ripple effect color
+```xml
+<color name="handyRippleColor">color</color>
+```
+or
 ```java
-<color name="handyRippleColor">YourColor</color>
+set().rippleColor(color)
 ```
 
 ## Download
@@ -92,7 +96,7 @@ Step 1. Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```groovy
     dependencies {
-        compile 'com.github.e16din:HandyHolder:1.3.1'
+        compile 'com.github.e16din:HandyHolder:1.3.2'
     }
 ```
 
