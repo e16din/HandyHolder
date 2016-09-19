@@ -74,6 +74,11 @@ You may use it with any RecyclerView.Adapter.
     }
 ```
 
+## Customize ripple effect color
+```java
+<color name="handyRippleColor">YourColor</color>
+```
+
 ## Download
 Step 1. Add it in your root build.gradle at the end of repositories:
 ```groovy
@@ -87,7 +92,7 @@ Step 1. Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```groovy
     dependencies {
-        compile 'com.github.e16din:HandyHolder:1.3.0'
+        compile 'com.github.e16din:HandyHolder:1.3.1'
     }
 ```
 

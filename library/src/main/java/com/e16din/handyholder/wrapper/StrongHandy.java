@@ -24,7 +24,7 @@ public abstract class StrongHandy<ADAPTER extends RecyclerView.Adapter, HOLDER e
 
     public StrongHandy(ADAPTER adapter, ViewGroup vParent, int layoutId) {
         final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
-        ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
+        final ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
         final HOLDER holder = newHolder(itemView);
 
         if (holder instanceof StrongHandyHolder) {
