@@ -1,13 +1,11 @@
 package com.e16din.handyholder.holder;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.e16din.handyholder.AlreadyBox;
-import com.e16din.handyholder.R;
 import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 import com.e16din.handyholder.listeners.holder.StrongHolderListener;
@@ -16,41 +14,6 @@ import java.util.List;
 
 @SuppressWarnings("unused")//remove it to see warnings
 public class StrongHandyHolder<ADAPTER extends RecyclerView.Adapter, MODEL> extends RecyclerView.ViewHolder {
-
-
-    public static <ADAPTER extends RecyclerView.Adapter, MODEL>
-    StrongHandyHolder<ADAPTER, MODEL> createStrong(ADAPTER adapter, ViewGroup vParent, int layoutId) {
-
-        final LayoutInflater inflater = LayoutInflater.from(HandyHolder.getContext());
-        ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.layout_root, vParent, false);
-        final StrongHandyHolder<ADAPTER, MODEL> holder = new StrongHandyHolder<>(itemView);
-        onCreate(adapter, layoutId, (FrameLayout) itemView, holder);
-
-        return holder;
-    }
-
-    protected static <ADAPTER extends RecyclerView.Adapter, MODEL> void onCreate(
-            ADAPTER adapter, int layoutId, FrameLayout itemView, StrongHandyHolder<ADAPTER, MODEL> holder) {
-        holder.mCommonBox.vRoot = itemView;
-        holder.mCommonBox
-                .adapter(adapter)
-                .layoutId(layoutId);
-    }
-
-    public static <ADAPTER extends RecyclerView.Adapter, MODEL>
-    StrongHandyHolder<ADAPTER, MODEL> createStrong(ADAPTER adapter, ViewGroup vParent) {
-
-        return StrongHandyHolder.createStrong(adapter, vParent, 0);
-    }
-
-    public static <MODEL> StrongHandyHolder<RecyclerView.Adapter, MODEL> createStrong(ViewGroup vParent, int layoutId) {
-        return StrongHandyHolder.createStrong(null, vParent, layoutId);
-    }
-
-    public static <MODEL> StrongHandyHolder<RecyclerView.Adapter, MODEL> createStrong(ViewGroup vParent) {
-        return StrongHandyHolder.createStrong(vParent, 0);
-    }
-
 
     protected AlreadyBox<ADAPTER, StrongHandyHolder<ADAPTER, MODEL>, MODEL> mCommonBox = new AlreadyBox<>();
 
