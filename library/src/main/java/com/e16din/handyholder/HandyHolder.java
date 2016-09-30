@@ -1,4 +1,4 @@
-package com.e16din.handyholder.holder;
+package com.e16din.handyholder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.e16din.handyholder.AlreadyBox;
+import com.e16din.handyholder.settings.AlreadyBox;
 import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
 import com.e16din.handyholder.listeners.holder.HolderListener;

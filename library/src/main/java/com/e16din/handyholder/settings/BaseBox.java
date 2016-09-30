@@ -1,4 +1,4 @@
-package com.e16din.handyholder;
+package com.e16din.handyholder.settings;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.e16din.handyholder.holder.HandyHolder;
+import com.e16din.handyholder.R;
+import com.e16din.handyholder.Utils;
+import com.e16din.handyholder.HandyHolder;
 import com.e16din.handyholder.listeners.holder.HolderListener;
 
 import java.util.List;
@@ -137,7 +139,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
     public boolean inflate(final HOLDER holder, @NonNull LayoutInflater inflater) {
         if (vRoot == null) {
-            throw new IllegalStateException("You must set vRoot before use it, please see the StrongHandyHolder.create() methods");
+            throw new IllegalStateException("You must set vRoot before use it, please see the HandyHolder.create() methods");
         }
 
         if (mAsyncInflating) {

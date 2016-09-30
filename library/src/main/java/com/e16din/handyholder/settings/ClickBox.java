@@ -1,4 +1,4 @@
-package com.e16din.handyholder;
+package com.e16din.handyholder.settings;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
