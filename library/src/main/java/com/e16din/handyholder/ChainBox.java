@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.e16din.handyholder.listeners.click.OnClickListener;
 import com.e16din.handyholder.listeners.click.OnViewsClickListener;
-import com.e16din.handyholder.listeners.holder.StrongHolderListener;
+import com.e16din.handyholder.listeners.holder.HolderListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public class ChainBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends RecyclerView.ViewHolder, MODEL>
         extends ClickBox<ADAPTER, HOLDER, MODEL> {
 
-    public ChainBox<ADAPTER, HOLDER, MODEL> holderListener(StrongHolderListener<ADAPTER, HOLDER, MODEL> listener) {
+    public ChainBox<ADAPTER, HOLDER, MODEL> holderListener(HolderListener<ADAPTER, HOLDER, MODEL> listener) {
 
         if (mListeners == null) {
             mListeners = new ArrayList<>();

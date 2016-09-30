@@ -17,8 +17,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.e16din.handyholder.holder.HandyHolder;
-import com.e16din.handyholder.holder.StrongHandyHolder;
-import com.e16din.handyholder.listeners.holder.StrongHolderListener;
+import com.e16din.handyholder.listeners.holder.HolderListener;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
     public ViewGroup vContainer;//in the itemView(vRoot)
 
 
-    public List<StrongHolderListener<ADAPTER, HOLDER, MODEL>> mListeners;
+    public List<HolderListener<ADAPTER, HOLDER, MODEL>> mListeners;
 
 
     @LayoutRes public int mLayoutId;
@@ -84,7 +83,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         mItem = null;
     }
 
-    public void removeHolderListener(StrongHolderListener listener) {
+    public void removeHolderListener(HolderListener listener) {
         if (mListeners != null) {
             mListeners.remove(listener);
         }
@@ -124,12 +123,12 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         }
 
         if (mListeners != null) {
-            for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+            for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.onAsyncInflateFinished(mAdapter, holder, position);
             }
         }
-        if (holder instanceof StrongHandyHolder) {
-            ((StrongHandyHolder) holder).onAsyncInflateFinished(mAdapter, position);
+        if (holder instanceof HandyHolder) {
+            ((HandyHolder) holder).onAsyncInflateFinished(mAdapter, position);
         }
 
         freeHolder();
@@ -181,26 +180,26 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         }// wait for async inflater
 
         if (mListeners != null) {
-            for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+            for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.beforeBind(mAdapter, holder, item, position);
             }
         }
-        if (holder instanceof StrongHandyHolder) {
-            ((StrongHandyHolder) holder).beforeBind(mAdapter, item, position);
+        if (holder instanceof HandyHolder) {
+            ((HandyHolder) holder).beforeBind(mAdapter, item, position);
         }
 
         onBind(holder, item, position);
-        if (holder instanceof StrongHandyHolder) {
-            ((StrongHandyHolder) holder).onBind(item, position);
+        if (holder instanceof HandyHolder) {
+            ((HandyHolder) holder).onBind(item, position);
         }
 
         if (mListeners != null) {
-            for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+            for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.afterBind(mAdapter, holder, item, position);
             }
         }
-        if (holder instanceof StrongHandyHolder) {
-            ((StrongHandyHolder) holder).afterBind(mAdapter, item, position);
+        if (holder instanceof HandyHolder) {
+            ((HandyHolder) holder).afterBind(mAdapter, item, position);
         }
 
         freeAdapter();
@@ -208,7 +207,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
     public void onBind(HOLDER holder, MODEL item, int position) {
         if (mListeners != null) {
-            for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+            for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.onBind(item, position);
             }
         }
@@ -243,12 +242,12 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
     }
 
     public void onInit(HOLDER holder, View v) {
-        if (holder instanceof StrongHandyHolder) {
-            ((StrongHandyHolder) holder).onInit(v);
+        if (holder instanceof HandyHolder) {
+            ((HandyHolder) holder).onInit(v);
         }
 
         if (mListeners != null) {
-            for (StrongHolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
+            for (HolderListener<ADAPTER, HOLDER, MODEL> listener : mListeners) {
                 listener.onInit(holder, v);
             }
         }
