@@ -1,8 +1,11 @@
 package com.e16din.handyholder.settings;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -16,9 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.e16din.handyholder.HandyHolder;
 import com.e16din.handyholder.R;
 import com.e16din.handyholder.Utils;
-import com.e16din.handyholder.HandyHolder;
 import com.e16din.handyholder.listeners.holder.HolderListener;
 
 import java.util.List;
@@ -55,7 +58,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
 
     @LayoutRes public int mLayoutId;
 
-    public RippleDrawable mRippleSelectorDrawable;//todo: add selector to old androids
+    public Drawable mRippleSelectorDrawable;
 
     public Point mEmptyStubSize = new Point(0, 64);//dp, 0 is MATCH_PARENT
 
@@ -215,29 +218,32 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         }
 
         if (mRippleEffect && mRippleSelectorDrawable == null) {
-            final int[] attrs = new int[]{android.R.attr.selectableItemBackground};
-            final TypedArray ta = HandyHolder.getContext().obtainStyledAttributes(attrs);
+            final Context context = holder.itemView.getContext();
 
-            mRippleSelectorDrawable = (RippleDrawable) ta.getDrawable(0);
+            final int rippleColor = mRippleColor != WRONG_VALUE
+                    ? mRippleColor
+                    : ContextCompat.getColor(context, R.color.handyRippleColor);
+            final ColorStateList selector = createSelector(Color.TRANSPARENT, rippleColor);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                final int rippleColor = mRippleColor != WRONG_VALUE
-                        ? mRippleColor
-                        : ContextCompat.getColor(holder.itemView.getContext(), R.color.handyRippleColor);
+                final int[] attrs = new int[]{android.R.attr.selectableItemBackground};
+                final TypedArray ta = HandyHolder.getContext().obtainStyledAttributes(attrs);
 
-                mRippleSelectorDrawable.setColor(createSelector(
-                        ContextCompat.getColor(holder.itemView.getContext(), android.R.color.transparent),
-                        rippleColor
-                ));
+                RippleDrawable drawable = (RippleDrawable) ta.getDrawable(0);
+
+                drawable.setColor(selector);
+
+                mRippleSelectorDrawable = drawable;
+                ta.recycle();
+
+            } else {
+                mRippleSelectorDrawable = new codetail.graphics.drawables.RippleDrawable(
+                        selector, vRoot.getBackground(), null);
             }
-
-            ta.recycle();
         }
 
         if (mRippleEffect) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                vRoot.setForeground(mRippleSelectorDrawable);
-            }
+            vRoot.setForeground(mRippleSelectorDrawable);
         } else {
             vRoot.setForeground(null);
         }
@@ -255,7 +261,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         }
     }
 
-    public static ColorStateList createSelector(int normalColor, int pressedColor) {
+    private ColorStateList createSelector(int normalColor, int pressedColor) {
         return new ColorStateList(
                 new int[][]
                         {

@@ -21,10 +21,7 @@ android {
 dependencies {
     final SUPPORT_LIBRARY_VERSION = "24.2.1"
 
-    compile("com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION@aar") {
-        transitive = true
-    }
-    compile("com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION@aar") {
-        transitive = true
-    }
+    compile("com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION")
+    compile("com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION")
+    compile 'com.github.e16din:RippleDrawable:2.0.2'
 }
