@@ -223,7 +223,7 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
             final int rippleColor = mRippleColor != WRONG_VALUE
                     ? mRippleColor
                     : ContextCompat.getColor(context, R.color.handyRippleColor);
-            final ColorStateList selector = createSelector(Color.TRANSPARENT, rippleColor);
+            final ColorStateList selector = Utils.createSelector(Color.TRANSPARENT, rippleColor);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final int[] attrs = new int[]{android.R.attr.selectableItemBackground};
@@ -259,24 +259,5 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
                 listener.onInit(holder, v);
             }
         }
-    }
-
-    private ColorStateList createSelector(int normalColor, int pressedColor) {
-        return new ColorStateList(
-                new int[][]
-                        {
-                                new int[]{android.R.attr.state_pressed},
-                                new int[]{android.R.attr.state_focused},
-                                new int[]{android.R.attr.state_activated},
-                                new int[]{}
-                        },
-                new int[]
-                        {
-                                pressedColor,
-                                pressedColor,
-                                pressedColor,
-                                normalColor
-                        }
-        );
     }
 }
