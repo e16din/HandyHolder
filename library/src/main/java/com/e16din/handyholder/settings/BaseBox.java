@@ -1,13 +1,7 @@
 package com.e16din.handyholder.settings;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -23,6 +17,7 @@ import com.e16din.handyholder.HandyHolder;
 import com.e16din.handyholder.R;
 import com.e16din.handyholder.Utils;
 import com.e16din.handyholder.listeners.holder.HolderListener;
+import com.e16din.ripplemaster.RippleMaster;
 
 import java.util.List;
 
@@ -218,33 +213,14 @@ public class BaseBox<ADAPTER extends RecyclerView.Adapter, HOLDER extends Recycl
         }
 
         if (mRippleEffect && mRippleSelectorDrawable == null) {
-            final Context context = holder.itemView.getContext();
-
             final int rippleColor = mRippleColor != WRONG_VALUE
                     ? mRippleColor
-                    : ContextCompat.getColor(context, R.color.handyRippleColor);
-            final ColorStateList selector = Utils.createSelector(Color.TRANSPARENT, rippleColor);
+                    : ContextCompat.getColor(holder.itemView.getContext(), R.color.handyRippleColor);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                final int[] attrs = new int[]{android.R.attr.selectableItemBackground};
-                final TypedArray ta = HandyHolder.getContext().obtainStyledAttributes(attrs);
-
-                RippleDrawable drawable = (RippleDrawable) ta.getDrawable(0);
-
-                drawable.setColor(selector);
-
-                mRippleSelectorDrawable = drawable;
-                ta.recycle();
-
-            } else {
-                mRippleSelectorDrawable = new codetail.graphics.drawables.RippleDrawable(
-                        selector, vRoot.getBackground(), null);
-            }
+            RippleMaster.setRippleForeground(vRoot, rippleColor);
         }
 
-        if (mRippleEffect) {
-            vRoot.setForeground(mRippleSelectorDrawable);
-        } else {
+        if (!mRippleEffect) {
             vRoot.setForeground(null);
         }
     }
